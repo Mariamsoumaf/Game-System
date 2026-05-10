@@ -1,130 +1,98 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-// Linked List
+// ======= LINKED LIST =======
 struct Game {
-    string player, game;
+    string player;
+    string game;
     Game* next;
+    Game(string p, string g) {
+        player = p;
+        game = g;
+        next = NULL;
+    }
 };
 
 Game* head = NULL;
 
-// Add game
 void addGame() {
-    Game* n = new Game();
-
-    cout << "Player: ";
-    cin >> n->player;
-
-    cout << "Game: ";
-    cin >> n->game;
-
-    n->next = head;
-    head = n;
-
-    cout << "Game Added!\n";
+    string p, g;
+    cout << "Player name: ";
+    cin >> p;
+    cout << "Game name: ";
+    cin >> g;
+    Game* newGame = new Game(p, g);
+    newGame->next = head;
+    head = newGame;
+    cout << "Game added!" << endl;
 }
 
-// View games
 void viewGames() {
-    Game* t = head;
-
-    if (t == NULL) {
-        cout << "No Games Saved!\n";
+    if (head == NULL) {
+        cout << "No games saved!" << endl;
         return;
     }
-
-    while (t != NULL) {
-        cout << t->player << " - " << t->game << endl;
-        t = t->next;
+    Game* temp = head;
+    int i = 1;
+    while (temp != NULL) {
+        cout << i << ". " << temp->player << " -> " << temp->game << endl;
+        temp = temp->next;
+        i++;
     }
 }
 
-// Tree
-struct Node {
-    string text;
-    Node* yes;
-    Node* no;
-};
+// ======= TREE =======
+void recommendGame() {
+    int choice;
+    cout << "\n1. Action  2. Survival" << endl;
+    cout << "Choice: ";
+    cin >> choice;
 
-// Recommend game
-void recommend() {
-
-    Node* root = new Node{
-        "1.Action  2.Survival",
-
-        new Node{
-            "1.Online  2.Offline",
-            new Node{"Call of Duty", NULL, NULL},
-            new Node{"GTA V", NULL, NULL}
-        },
-
-        new Node{
-            "1.Building  2.Horror",
-            new Node{"Minecraft", NULL, NULL},
-            new Node{"Resident Evil", NULL, NULL}
-        }
-    };
-
-    int x, y;
-    Node* next;
-
-    cout << root->text << ": ";
-    cin >> x;
-
-    if (x == 1)
-        next = root->yes;
-    else
-        next = root->no;
-
-    cout << next->text << ": ";
-    cin >> y;
-
-    if (y == 1)
-        cout << "Recommended: " << next->yes->text << endl;
-    else
-        cout << "Recommended: " << next->no->text << endl;
+    if (choice == 1) {
+        cout << "1. Online  2. Offline" << endl;
+        cout << "Choice: ";
+        cin >> choice;
+        if (choice == 1)
+            cout << "Recommended: Call of Duty!" << endl;
+        else
+            cout << "Recommended: GTA V!" << endl;
+    } else {
+        cout << "1. Building  2. Horror" << endl;
+        cout << "Choice: ";
+        cin >> choice;
+        if (choice == 1)
+            cout << "Recommended: Minecraft!" << endl;
+        else
+            cout << "Recommended: Resident Evil!" << endl;
+    }
 }
 
-// Main
+// ======= MAIN =======
 int main() {
+    int choice;
 
-    int c;
+    cout << "==============================" << endl;
+    cout << "      SMART GAME SYSTEM       " << endl;
+    cout << "   Using Tree + Linked List   " << endl;
+    cout << "==============================" << endl;
 
     do {
-
-        cout << "\n=== SMART GAME SYSTEM ===\n";
-        cout << "1.Recommend Game\n";
-        cout << "2.Add Game\n";
-        cout << "3.View Games\n";
-        cout << "4.Exit\n";
+        cout << "\n1. Recommend Game" << endl;
+        cout << "2. Add Favorite Game" << endl;
+        cout << "3. View Saved Games" << endl;
+        cout << "4. Exit" << endl;
         cout << "Choice: ";
+        cin >> choice;
 
-        cin >> c;
-
-        switch(c) {
-
-            case 1:
-                recommend();
-                break;
-
-            case 2:
-                addGame();
-                break;
-
-            case 3:
-                viewGames();
-                break;
-
-            case 4:
-                cout << "Goodbye!\n";
-                break;
-
-            default:
-                cout << "Invalid!\n";
+        switch(choice) {
+            case 1: recommendGame(); break;
+            case 2: addGame(); break;
+            case 3: viewGames(); break;
+            case 4: cout << "Goodbye!" << endl; break;
+            default: cout << "Invalid!" << endl;
         }
-
-    } while(c != 4);
+    } while (choice != 4);
 
     return 0;
 }
