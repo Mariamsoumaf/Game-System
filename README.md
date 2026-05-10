@@ -1,4 +1,4 @@
-#SEN208 - Data Structures
+## SEN208 - Data Structures
 
 # 🎮 Smart Game System
 
